@@ -1,21 +1,44 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png" />
-    <div>
-      <el-button type="primary">el-button</el-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <TaskList :tasks="state.tasks" />
+    <TaskForm @submit="createTask" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, reactive } from 'vue'
+import TaskForm from './components/TaskForm.vue'
+import TaskList from './components/TaskList.vue'
+import axios from 'axios'
+import { Task } from './types/task'
+
+interface State {
+  tasks: Task[]
+}
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    TaskForm,
+    TaskList,
+  },
+
+  setup() {
+    const state: State = reactive({ tasks: [{ id: 1, name: 'sample' }] })
+    const createTask = async (task: Task) => {
+      console.log(task)
+      const res = await axios.post('/tasks')
+      state.tasks.push(res.data)
+    }
+    const fetchTasks = async () => {
+      const res = await axios.get('/tasks')
+      state.tasks = res.data
+    }
+    fetchTasks()
+    return {
+      state,
+      createTask,
+    }
   }
 })
 </script>
@@ -27,6 +50,7 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 60px auto;
+  width: 600px;
 }
 </style>
