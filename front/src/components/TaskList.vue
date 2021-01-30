@@ -6,8 +6,8 @@
     <div class="head -span3"></div>
     <template v-for="task in tasks" :key="task.id">
       <div class="name">{{ task.name }}</div>
-      <div class="started">{{ task.startedAt || '--:--' }}</div>
-      <div class="finished">{{ task.finishedAt || '--:--' }}</div>
+      <div class="started">{{ formatTime(task.startedAt) }}</div>
+      <div class="finished">{{ formatTime(task.finishedAt) }}</div>
       <ElButton type="primary" @click="start(task.id)">Start</ElButton>
       <ElButton @click="finish(task.id)">Finish</ElButton>
       <ElButton type="danger" @click="deleteTask(task.id)">Delete</ElButton>
@@ -16,24 +16,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import moment from 'moment'
 import { Task } from '../types/task'
-
-interface State {
-  tasks: Task[]
-}
 
 export default defineComponent({
   name: 'TaskList',
+
   emits: ['patch', 'delete'],
+
   props: {
-    tasks: Array
+    tasks: Array as PropType<Task[]>
   },
+
   setup(props, { emit }) {
+    const formatTime = (str: string) => {
+      if (str) {
+        return moment(str).format('hh:mm')
+      }
+      return '--:--'
+    }
     const start = (id: number) => emit('patch', { id, state: 'started' })
     const finish = (id: number) => emit('patch', { id, state: 'finished' })
     const deleteTask = (id: number) => emit('delete', id)
-    return { start, finish, deleteTask }
+    return {
+      formatTime,
+      start,
+      finish,
+      deleteTask
+    }
   }
 })
 </script>
