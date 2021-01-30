@@ -1,5 +1,5 @@
 <template>
-  <ElForm form="form" @submit.prevent="$emit('submit', form)">
+  <ElForm form="form" @submit.prevent="$emit('submit', form)" label-width="120px">
     <ElFormItem label="Task Name">
       <ElInput v-model="form.name" />
     </ElFormItem>

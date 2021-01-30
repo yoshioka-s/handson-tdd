@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <TaskList :tasks="state.tasks" />
-    <TaskForm @submit="createTask" />
+    <TaskList class="list" :tasks="state.tasks" @patch="patchTask" @deleteTask="deleteTask" />
+    <TaskForm class="form" @submit="createTask" />
   </div>
 </template>
 
@@ -25,19 +25,29 @@ export default defineComponent({
 
   setup() {
     const state: State = reactive({ tasks: [{ id: 1, name: 'sample' }] })
-    const createTask = async (task: Task) => {
-      console.log(task)
-      const res = await axios.post('/tasks')
-      state.tasks.push(res.data)
-    }
     const fetchTasks = async () => {
       const res = await axios.get('/tasks')
       state.tasks = res.data
     }
     fetchTasks()
+
+    const createTask = async (task: Task) => {
+      await axios.post('/tasks')
+      fetchTasks()
+    }
+
+    const patchTask = async (task: Task) => {
+      await axios.patch(`/tasks/${task.id}`, task)
+      fetchTasks()
+    }
+    const deleteTask = async (id: number) => {
+      await axios.delete(`/tasks/${id}`)
+      fetchTasks()
+    }
     return {
       state,
       createTask,
+      patchTask
     }
   }
 })
@@ -51,6 +61,9 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin: 60px auto;
-  width: 600px;
+  width: 800px;
+  > .list {
+    margin-bottom: 60px;
+  }
 }
 </style>
