@@ -7,4 +7,4 @@ const data = (props => {
   }
   return Object.assign(defaultData, props)
 })
-export default async (props = {}) => Task.create(data(props))
+export default (props = {}) => Task.create(data(props))
