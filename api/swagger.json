@@ -29,6 +29,17 @@
       "post": {
         "summary": "Create a new task",
         "description": "Creates a new task and returns the task",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "name",
+            "description": "name of the task",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created",
@@ -53,8 +64,26 @@
     },
     "/task/{id}": {
       "patch": {
-        "summary": "Update properties of a task",
-        "description": "Update properties of a task",
+        "summary": "Update status of a task",
+        "description": "Update status of a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "description": "The id of the task to be updated"
+          },
+          {
+            "in": "body",
+            "name": "status",
+            "description": "status of the task",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -91,6 +120,15 @@
       "delete": {
         "summary": "Delete a task",
         "description": "Delete a task",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "description": "The id of the task to be updated"
+          }
+        ],
         "responses": {
           "204": {
             "description": "No content"
@@ -121,6 +159,10 @@
         "name": {
           "type": "string",
           "example": "sample task"
+        },
+        "status": {
+          "type": "string",
+          "example": "started"
         },
         "startedAt":{
           "type": "string",
