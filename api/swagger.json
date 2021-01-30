@@ -1,0 +1,136 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "TDD Handson API",
+    "description": "Sample API for TDD handson",
+    "version": "1.0.0"
+  },
+  "schemes": ["http"],
+  "host": "localhost",
+
+  "paths": {
+    "/tasks":{
+      "get": {
+        "summary": "Returns a list of tasks",
+        "description": "Returns a list of tasks as an array",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/task"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new task",
+        "description": "Creates a new task and returns the task",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          },
+          "422": {
+            "description": "Invalid properties",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "name can't be empty"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/task/{id}": {
+      "patch": {
+        "summary": "Update properties of a task",
+        "description": "Update properties of a task",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          },
+          "422": {
+            "description": "Invalid properties",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "The task has already been started"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a task",
+        "description": "Delete a task",
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "task":{
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "sample task"
+        },
+        "startedAt":{
+          "type": "string",
+          "example": "2020-01-01 00:00:00"
+        },
+        "finishedAt":{
+          "type": "string",
+          "example": "2020-01-01 01:00:00"
+        }
+      }
+    }
+  }
+}

@@ -1,13 +1,13 @@
 import express from 'express'
+import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocument from './swagger.json'
 import router from './src/routes'
-console.log('start')
+console.log('starting Express server...')
 
 const app = express()
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Oring', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
-})
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use(cors)
 app.use(express.json())
 
 app.use(router)
@@ -15,4 +15,3 @@ app.use(router)
 app.listen(8000, () => {
   console.log('API listening on port 8000')
 })
-
