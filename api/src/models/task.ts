@@ -5,11 +5,14 @@ const Task = sequelize.define('Task', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   status: {
-    type: DataTypes.TINYINT,
+    type: DataTypes.ENUM('initialized', 'started', 'finished'),
     allowNull: false,
-    defaultValue: 0
+    defaultValue: 'initialized'
   },
   startedAt: {
     type: DataTypes.TIME
