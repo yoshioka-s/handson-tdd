@@ -10,10 +10,19 @@ describe('tasks endpoints', () => {
   })
 
   describe('GET /tasks', () => {
+    let task
+    beforeEach(async () => {
+      task = await taskFactory()
+    })
+
     it('success', done => {
+      api.get('/tasks').expect(200, done)
     })
 
     it('returns an array of tasks', async () => {
+      const res = await api.get('/tasks')
+      expect(res.body).toBeInstanceOf(Array)
+      expect(res.body[0].id).toBe(task.id)
     })
   })
 
