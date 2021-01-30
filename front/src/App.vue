@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TaskList class="list" :tasks="state.tasks" @patch="patchTask" @deleteTask="deleteTask" />
+    <TaskList class="list" :tasks="state.tasks" @patch="patchTask" @delete="deleteTask" />
     <TaskForm class="form" @submit="createTask" />
   </div>
 </template>
@@ -32,7 +32,7 @@ export default defineComponent({
     fetchTasks()
 
     const createTask = async (task: Task) => {
-      await axios.post('/tasks')
+      await axios.post('/tasks', task)
       fetchTasks()
     }
 
@@ -41,13 +41,15 @@ export default defineComponent({
       fetchTasks()
     }
     const deleteTask = async (id: number) => {
+      console.log('delete')
       await axios.delete(`/tasks/${id}`)
       fetchTasks()
     }
     return {
       state,
       createTask,
-      patchTask
+      patchTask,
+      deleteTask
     }
   }
 })
