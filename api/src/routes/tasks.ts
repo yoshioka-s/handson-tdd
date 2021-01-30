@@ -1,4 +1,5 @@
 import express from 'express'
+import moment from 'moment'
 import Task from '../models/task'
 
 const router = express.Router()
@@ -22,7 +23,7 @@ router.patch('/:id', async (req, res) => {
   if (!task) {
     return res.status(404).send('Not Found')
   }
-  await task.update({status: req.body.status, startedAt: Date.now()})
+  await task.update({status: req.body.status, startedAt: moment().toISOString()})
   return res.json(task)
 })
 
