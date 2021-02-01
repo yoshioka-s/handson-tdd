@@ -7,5 +7,7 @@ RUN npm install
 
 COPY . .
 
+RUN npm run db:migrate
+
 EXPOSE 8000
 CMD ["npm", "run", "dev"]
