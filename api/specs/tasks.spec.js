@@ -15,7 +15,7 @@ describe('tasks endpoints', () => {
       task = await taskFactory()
     })
 
-    it('success', done => {
+    it('successes', done => {
       api.get('/tasks').expect(200, done)
     })
 
@@ -26,6 +26,21 @@ describe('tasks endpoints', () => {
     })
   })
 
+  xdescribe('POST /tasks', () => {
+    describe('When name is not empty', () => {
+      const name = 'test'
+      it('successes', done => {
+      })
+      it('returns a new record', async () => {
+      })
+    })
+    describe('When name is empty', () => {
+      const name = ''
+      it('fails', done => {
+      })
+    })
+  })
+
   xdescribe('PATCH /tasks/{id}', () => {
     describe('Given a initialized task', () => {
       let task
@@ -33,7 +48,7 @@ describe('tasks endpoints', () => {
         task = await taskFactory()
       })
       describe('When send status: started', () => {
-        it('success', done => {
+        it('successes', done => {
         })
         it('updates the status to started', async () => {
         })
@@ -49,28 +64,13 @@ describe('tasks endpoints', () => {
     })
   })
 
-  xdescribe('POST /tasks', () => {
-    describe('When name is not empty', () => {
-      const name = 'test'
-      it('success', done => {
-      })
-      it('returns a new record', async () => {
-      })
-    })
-    describe('When name is empty', () => {
-      const name = ''
-      it('fails', done => {
-      })
-    })
-  })
-
   xdescribe('DELETE /tasks/{id}', () => {
     describe('When deletes for a existing task', () => {
       let task
       beforeEach(async () => {
         task = await taskFactory()
       })
-      it('success' , done => {
+      it('successes' , done => {
       })
       it('deletes the task', async () => {
       })
