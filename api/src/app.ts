@@ -9,6 +9,5 @@ app.use(cors())
 app.use(express.json())
 app.use(router)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-app.use(cors)
 
 export default app
